@@ -13,12 +13,36 @@ openai.api_key = api_key
 ########## 함수 구조 만들기 ############
 ####################################
 def conn_whisper() :
+    audio_file = open("audio_input.wav", "rb")
+    
+    transcription = openai.Audio.transcribe(
+        model="whisper-1", 
+        file=audio_file
+    )
+    print(transcription['text'])
+    text_input = transcription['text']
     return text_input
 
 def conn_chatgpt(text_input) :
+    completion = openai.ChatCompletion.create(
+    model="gpt-3.5-turbo",
+        messages=[
+            {"role": "user", "content": text_input}
+        ]
+    )
+    print(completion.choices[0].message['content'])
+    text_output = completion.choices[0].message['content']
     return text_output
 
 def conn_tts(text_output) :
+    # gTTS 객체 생성
+    tts = gTTS(text=text_output, lang='ko')
+    # 파일 저장 경로 설정
+    speech_file_path = Path(__file__).parent / "audio_output.mp3"
+    # 파일로 저장
+    tts.save(speech_file_path)
+    print(f"Audio saved to {speech_file_path}")
+    audio_output_path = str(speech_file_path)
     return audio_output_path
 
 def main() :
