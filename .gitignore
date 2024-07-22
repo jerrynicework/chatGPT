@@ -1,0 +1,23 @@
+.env
+# Python 관련 파일 제외
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# 환경 설정 파일 제외
+.envrc
+.venv
+venv/
+ENV/
+env.bak/
+env/
+
+# IDE 관련 파일 제외
+.vscode/
+.idea/
+*.swp
+
+# MacOS 관련 파일 제외
+.DS_Store
